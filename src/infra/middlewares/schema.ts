@@ -11,11 +11,3 @@ export const readClassifierStatusSchema = {
         id: t.String()
     })
 }
-
-export const classifySchema = {
-    body: t.Object({
-        id: t.String(),
-        sample: t.String()
-    })
-}
-
