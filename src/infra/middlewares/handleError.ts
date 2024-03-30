@@ -7,12 +7,5 @@ type IMiddleware = {
 }
 
 export const handleError = ({ code, error, set }: IMiddleware) => {
-    console.error(error);
-
-    if (code === 'NOT_FOUND') {
-        set.status = 404
-        return 'Not Found :('
-    }
-
     return new Response(error.toString())
 }

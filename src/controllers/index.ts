@@ -27,6 +27,7 @@ export class ClasssifierController {
     }
 
     public async readClassifierStatus({ params: { id } }: any) {
+
         console.time('benchmark');
         const classifierRepository = new MongoDBClassifierRepository()
         const readClassifierStatusService = new ReadClassifierStatusService(classifierRepository)

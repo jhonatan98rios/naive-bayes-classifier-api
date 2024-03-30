@@ -15,9 +15,9 @@ const app = new Elysia();
 
 app
   .use(corsMiddleware)
-  .guard({ beforeHandle }, router(app))
   .onError(handleError)
-  .listen(3002);
+  .guard({ beforeHandle }, router(app))
+  .listen(process.env.PORT!);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}!`

@@ -1,6 +1,8 @@
 import S3 from "aws-sdk/clients/s3";
 import * as dotenv from 'dotenv'
 import { AbstractStorageProvider } from "../../domain/providers/AbstractStorageProvider";
+import { handlePromise } from "../../utils/handlePromise";
+import { NotFoundError } from "elysia";
 
 dotenv.config()
 
@@ -20,9 +22,10 @@ export class S3ProviderV2 implements AbstractStorageProvider {
       Key: key,
     }
 
-    const response = await this.s3Client.getObject(command).promise()
+    const [err, response] = await handlePromise<S3.GetObjectOutput>(this.s3Client.getObject(command).promise())
+    if (err) throw new NotFoundError(`S3 object does not exist: ${err}`)
 
-    const buffer = response.Body as Uint8Array | undefined
+    const buffer = response.Body as Uint8Array
     return buffer
   }
 }
