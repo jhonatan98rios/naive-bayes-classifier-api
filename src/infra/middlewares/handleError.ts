@@ -7,5 +7,9 @@ type IMiddleware = {
 }
 
 export const handleError = ({ code, error, set }: IMiddleware) => {
+    set.status = 500
+    if (code == "NOT_FOUND") set.status = 404
+    if (code == "INVALID_COOKIE_SIGNATURE") set.status = 403
+
     return new Response(error.toString())
 }
